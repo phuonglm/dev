@@ -49,7 +49,13 @@
         "/vagrant/workspace/readonly",
         "/vagrant/workspace/personal"
       ],
+      "ssh_known_hosts": [
+        "github.com",
+        "code.teracy.org"
+      ],
       "git":{
+        "version":"2.0.0", //more at https://www.kernel.org/pub/software/scm/git/
+        "checksum":"c6a370e95326701037dfe32f8e66f39cdd28557ca84ffdb282d6042c37a98b68",
         "user":{
           "name":"Teracy Dev",
           "email":"teracy-dev@teracy.com"
@@ -70,29 +76,53 @@
       },
       "nodejs":{
         "enabled":true,
-        "npm":[
-          "grunt-cli",
-          "bower"
-        ]
+        "version":"0.10.28",
+        "checksum":"ef08a75f6359a16e672cae684e0804ca7f4554b7",
+        "npm": {
+          "version":"1.4.3",
+          "globals": [
+            {
+              "name": "grunt-cli",
+              "version": ""
+            },
+            {
+              "name":"bower",
+              "version":""
+            },
+            {
+              "name":"yo",
+              "version":""
+            }
+          ]
+        }
       },
       "python":{
         "enabled":true,
         "pip":{
-          "global":{
-
-          }
+          "globals":[
+            {
+              "name":"Sphinx",
+              "version":""
+            },
+            {
+              "name":"restview",
+              "version":""
+            }
+          ]
         }
       },
       "ruby":{
         "enabled":false
       },
       "php":{
-        "enabled":false
+        "enabled":false,
+        "version":"5.4.29", //empty string: default ubuntu distribution; http://php.net/downloads.php
+        "checksum":"9caf973b19ba93bb2b78f78c61643d5d"
       },
       "java":{
         "enabled":false,
         "version":"7",
-        "flavor":"openjdk",
+        "flavor":"openjdk", //one of "openjdk", "oracle" or "ibm". Default: "openjdk"
         "maven":{
           "enabled":false,
           "version":"3"
