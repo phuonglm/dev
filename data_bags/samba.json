@@ -1,0 +1,14 @@
+{
+  "id": "shares",
+  "shares": {
+    "export": {
+      "comment": "Exported Share",
+      "path": "/home/vagrant/workspace",
+      "guest ok": "yes",
+      "printable": "no",
+      "write list": ["vagrant"],
+      "create mask": "0664",
+      "directory mask": "0775"
+    }
+  }
+}
