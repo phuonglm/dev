@@ -1,0 +1,166 @@
+{
+  "vm_box":"teracy/dev",
+  //"vm_box_url":"https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04-i386_chef-11.4.4.box",
+  "vm_forward_agent":true,
+  "vm_forwarded_ports":[
+    {
+      "guest":8000,
+      "host":8000
+    }
+  ],
+  "vm_synced_folders":[
+    {
+      "host":"./workspace",
+      "guest":"/home/vagrant/workspace",
+      "mount_options":[
+        "dmode=777",
+        "fmode=777"
+      ]
+    },
+    {
+      "host":"./home/.virtualenvs",
+      "guest":"/home/vagrant/.virtualenvs",
+      "supports": ["linux", "mac"]
+
+    },
+    {
+      "host":"./home/.ssh",
+      "guest":"/home/vagrant/.ssh",
+      "mount_options":[
+        "dmode=775",
+        "fmode=600"
+      ]
+    }
+  ],
+  "chef_log_level":"info", //one of debug, info, warn, error, fatal. Default: info
+  "chef_cookbooks":[
+    "vendor-cookbooks",
+    "main-cookbooks"
+  ],
+  "chef_role":"roles",
+  "chef_bags_path":"data_bags",
+  "chef_recipes":[
+    "apt",
+    "vim",
+    "git",
+    "teracy-dev"
+  ],
+  "chef_json":{
+    "teracy-dev":{
+      "workspace":[
+        "/vagrant/workspace/readonly",
+        "/vagrant/workspace/personal"
+      ],
+      "ssh_known_hosts": [
+        "github.com",
+        "code.teracy.org"
+      ],
+      "git":{
+        "version":"2.0.0", //more at https://www.kernel.org/pub/software/scm/git/
+        "checksum":"c6a370e95326701037dfe32f8e66f39cdd28557ca84ffdb282d6042c37a98b68",
+        "user":{
+          "name":"Teracy Dev",
+          "email":"teracy-dev@teracy.com"
+        },
+        "color":true,
+        "commit":{
+          "template":true
+        },
+        "core":{
+          "filemode":false
+        },
+        "diff":{
+          "tool":"vimdiff"
+        },
+        "merge":{
+          "tool":"vimdiff"
+        },
+        "difftool":{
+          "prompt":false
+        }
+      },
+      "nodejs":{
+        "enabled":true,
+        "version":"0.10.28",
+        "checksum":"ef08a75f6359a16e672cae684e0804ca7f4554b7",
+        "npm": {
+          "version":"1.4.3",
+          "globals": [
+            {
+              "name": "grunt-cli",
+              "version": ""
+            },
+            {
+              "name":"bower",
+              "version":""
+            },
+            {
+              "name":"yo",
+              "version":""
+            }
+          ]
+        }
+      },
+      "python":{
+        "enabled":true,
+        "pip":{
+          "globals":[
+            {
+              "name":"Sphinx",
+              "version":""
+            },
+            {
+              "name":"restview",
+              "version":""
+            }
+          ]
+        }
+      },
+      "ruby":{
+        "enabled":false,
+        "version": "1.9.3-p194",
+        "globals":[
+          {
+            "name":"bundle",
+            "version":""
+          }
+        ]
+      },
+      "php":{
+        "enabled":false,
+        "version":"5.4.29", //empty string: default ubuntu distribution; http://php.net/downloads.php
+        "checksum":"9caf973b19ba93bb2b78f78c61643d5d"
+      },
+      "mysql":{
+        "enabled":false,
+        "version":"5.3.6",
+        "password":"teracy"
+      },
+      "mongodb":{
+        "enabled":false,
+        "version":"2.6.3"
+      },
+      "postgresql":{
+        "enabled":false,
+        "password":{
+          "postgres":"teracy"
+        },
+        "version":"9.3"
+      },
+      "java":{
+        "enabled":false,
+        "version":"7",
+        "flavor":"openjdk", //one of "openjdk", "oracle" or "ibm". Default: "openjdk"
+        "maven":{
+          "enabled":false,
+          "version":"3"
+        }
+      },
+      "apt":[
+        {
+          "name": "tree"
+        }
+      ]
+    }
+  }
+}
