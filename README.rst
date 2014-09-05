@@ -24,7 +24,7 @@ More commands: http://docs.vagrantup.com/v2/cli/index.html
 Installation
 ------------
 
-Follow the guide at: http://dev.teracy.org/docs/0.3.2/getting_started.html
+Follow the guide at: http://dev.teracy.org/docs/0.3.3/getting_started.html
 
 
 Configuration
@@ -53,10 +53,10 @@ For example, override the ``vm_forwarded_ports`` and ``java`` keys as follows.
         "host":3000
       }
     ],
-   
+
     "chef_json":{
    // Config git for virtualbox
-      "git":{        
+      "git":{
         "user":{
           "name":"Hoa Vu",
           "email":"hoavu@teracy.com"
@@ -99,7 +99,7 @@ Training
 
 We offered free training for recruiting newcomers.
 
-- For Django development, please head to: http://dev.teracy.org/docs/0.3.2/django_training.html
+- For Django development, please head to: http://dev.teracy.org/docs/0.3.3/django_training.html
 
 
 Learn more
