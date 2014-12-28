@@ -31,6 +31,12 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+# backward compatible with teracy/dev v0.3.4 base box
+directory '/home/vagrant/.virtualenvs' do
+    action :delete
+    not_if do ::File.exists?('/home/vagrant/.virtualenvs/premkproject') end
+end
+
 python_pip 'virtualenvwrapper' do
     action :install
 end
@@ -41,11 +47,4 @@ bash 'configure_virtualenvwrapper' do
         echo 'source /usr/local/bin/virtualenvwrapper.sh' >> /home/vagrant/.bash_profile && source /home/vagrant/.bash_profile
     EOF
     not_if 'grep -q /usr/local/bin/virtualenvwrapper.sh /home/vagrant/.bash_profile'
-end
-
-directory '/home/vagrant/.virtualenvs' do
-    owner 'vagrant'
-    group 'vagrant'
-    mode 00755
-    recursive true
 end
