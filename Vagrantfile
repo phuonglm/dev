@@ -1,5 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
+
 
 Vagrant.configure("2") do |config|
 
@@ -32,11 +34,11 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = data_hash["vm_box"]
+  # config.vm.box = data_hash["vm_box"]
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = data_hash['vm_box_url']
+  # config.vm.box_url = data_hash['vm_box_url']
 
   # Other configs: https://docs.vagrantup.com/v2/vagrantfile/machine_settings.html
 
@@ -161,13 +163,30 @@ Vagrant.configure("2") do |config|
   # Example for VirtualBox:
   # View the documentation for the provider you're using for more
   # information on available options.
-  config.vm.provider :virtualbox do |vb|
+  #config.vm.provider :virtualbox do |vb|
     # Don't boot with headless mode
     # vb.gui = true
 
     # Use VBoxManage to customize the VM. For example to change memory:
-    vb.customize ["modifyvm", :id, "--memory", "2048"]
+  #  vb.customize ["modifyvm", :id, "--memory", "2048"]
+  #end
+
+  config.vm.define "teracy-dev" do |a|
+    a.vm.provider "docker" do |d|
+      d.build_dir = "."
+      d.has_ssh = true
+      d.build_args = ["-t=teracy_dev/develop"]
+      d.name = "teracy_dev_develop"
+      d.cmd = ["/usr/sbin/sshd", "-D"]
+      d.vagrant_machine = "dockerhost"
+      d.remains_running = true
+      d.vagrant_vagrantfile = "./DockerHostVagrantfile"
+    end
+    a.ssh.port = '22'
+    a.ssh.username = 'root'
+    a.ssh.password = 'vagrant'
   end
+
 
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
   # path, and data_bags path (all relative to this Vagrantfile), and adding
