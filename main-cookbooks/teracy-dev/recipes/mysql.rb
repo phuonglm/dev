@@ -30,7 +30,12 @@ if node['teracy-dev']['mysql']['enabled']
       action :nothing
     end.run_action(:run)
 
-    include_recipe 'mysql::server'
-    include_recipe 'mysql::client'
-
+    mysql_service 'default' do
+      port '3306'
+      version '5.5'
+      action [:create]
+    end
+    mysql_client 'default' do
+      action :create
+    end
 end

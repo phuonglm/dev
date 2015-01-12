@@ -1,0 +1,30 @@
+diff --git a/vendor-cookbooks/php/metadata.rb b/vendor-cookbooks/php/metadata.rb
+index 18259d0..75f60e6 100644
+--- a/vendor-cookbooks/php/metadata.rb
++++ b/vendor-cookbooks/php/metadata.rb
+@@ -7,7 +7,7 @@
+
+ depends 'build-essential'
+ depends 'xml'
+-depends 'mysql'
++depends 'mysql', '>= 6.0.0'
+ depends 'yum-epel'
+ depends 'windows'
+ depends 'iis'
+diff --git a/vendor-cookbooks/php/recipes/source.rb b/vendor-cookbooks/php/recipes/source.rb
+index 4805034..dbef372 100644
+--- a/vendor-cookbooks/php/recipes/source.rb
++++ b/vendor-cookbooks/php/recipes/source.rb
+@@ -22,7 +22,11 @@
+
+ include_recipe 'build-essential'
+ include_recipe 'xml'
+-include_recipe 'mysql::client' if configure_options =~ /mysql/
++if configure_options =~ /mysql/
++  mysql_client 'default' do
++      action :create
++  end
++end
+ include_recipe 'yum-epel' if node['platform_family'] == 'rhel'
+
+ pkgs = value_for_platform_family(
