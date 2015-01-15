@@ -1,8 +1,5 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
-
-
 Vagrant.configure("2") do |config|
 
   require 'json'
@@ -11,6 +8,8 @@ Vagrant.configure("2") do |config|
   # Load default setting
   file = File.read(File.dirname(__FILE__) + '/vagrant_config.json')
   data_hash = JSON.parse(file)
+
+  ENV['VAGRANT_DEFAULT_PROVIDER'] = data_hash['vm_provider']
 
   # Check and override if exist any match JSON object from vagrant_config_override.json
   if File.exist? (File.dirname(__FILE__) + '/vagrant_config_override.json')
@@ -36,11 +35,15 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  # config.vm.box = data_hash["vm_box"]
+  if data_hash['vm_provider'] != "docker"
+    config.vm.box = data_hash["vm_box"]
+  end
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  # config.vm.box_url = data_hash['vm_box_url']
+  if data_hash['vm_provider'] != "docker"
+    config.vm.box_url = data_hash['vm_box_url']
+  end
 
   # Other configs: https://docs.vagrantup.com/v2/vagrantfile/machine_settings.html
 
@@ -165,26 +168,30 @@ Vagrant.configure("2") do |config|
   # Example for VirtualBox:
   # View the documentation for the provider you're using for more
   # information on available options.
-  #config.vm.provider :virtualbox do |vb|
-    # Don't boot with headless mode
-    # vb.gui = true
+  if data_hash['vm_provider'] == "docker"
+    config.vm.define "teracy-dev" do |a|
+      a.vm.provider "docker" do |d|
+        d.build_dir = "."
+        d.has_ssh = true
+        d.build_args = ["-t=teracy_dev/develop"]
+        d.name = "teracy_dev_develop"
+        d.cmd = ["/usr/sbin/sshd", "-D"]
+        d.vagrant_machine = "dockerhost"
+        d.remains_running = true
+        d.vagrant_vagrantfile = "./DockerHostVagrantfile"
+      end
+    end
+  else
+    config.vm.provider :virtualbox do |vb|
+      # Don't boot with headless mode
+      # vb.gui = true
 
-    # Use VBoxManage to customize the VM. For example to change memory:
-  #  vb.customize ["modifyvm", :id, "--memory", "2048"]
-  #end
-
-  config.vm.define "teracy-dev" do |a|
-    a.vm.provider "docker" do |d|
-      d.build_dir = "."
-      d.has_ssh = true
-      d.build_args = ["-t=teracy_dev/develop"]
-      d.name = "teracy_dev_develop"
-      d.cmd = ["/usr/sbin/sshd", "-D"]
-      d.vagrant_machine = "dockerhost"
-      d.remains_running = true
-      d.vagrant_vagrantfile = "./DockerHostVagrantfile"
+      # Use VBoxManage to customize the VM. For example to change memory:
+      vb.customize ["modifyvm", :id, "--memory", "2048"]
     end
   end
+  data_hash['chef_json']['vm_provider'] = data_hash['vm_provider']
+
 
 
   # Enable provisioning with chef solo, specifying a cookbooks path, roles

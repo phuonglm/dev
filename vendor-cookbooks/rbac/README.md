@@ -13,7 +13,7 @@ be enhanced to support arbitrary Solaris permissions.
 
 ## Installation
 
-In order to add the RBAC LWRPs to a chef run, add the following recipe
+In order to add the RBAC LWRPs to a chef run, add the following recipe 
 to the run_list:
 
     rbac::default

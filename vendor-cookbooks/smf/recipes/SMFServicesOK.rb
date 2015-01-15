@@ -23,3 +23,4 @@ template 'SMFServicesOK.snmpd.conf' do
   source 'SMFServicesOK.snmpd.conf.erb'
   mode '0644'
 end
+

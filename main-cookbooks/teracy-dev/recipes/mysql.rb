@@ -32,8 +32,11 @@ if node['teracy-dev']['mysql']['enabled']
 
     mysql_service 'default' do
       port '3306'
-      version '5.5'
-      action [:create]
+      version node['teracy-dev']['mysql']['version']
+      bind_address '0.0.0.0'
+      initial_root_password node['teracy-dev']['mysql']['password']
+      provider Chef::Provider::MysqlService::Sysvinit
+      action [:create, :start]
     end
     mysql_client 'default' do
       action :create

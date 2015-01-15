@@ -1,4 +1,5 @@
 {
+  "vm_provider": "docker",
   "vm_box":"teracy/dev",
   //"vm_box":"teracy/dev-all", override this on vagrant_config_override.json
   //"vm_box": "opscode-ubuntu-1204-amd64-chef",
@@ -64,7 +65,7 @@
       ]
     }
   ],
-  "chef_log_level":"info", //one of debug, info, warn, error, fatal. Default: info
+  "chef_log_level":"debug", //one of debug, info, warn, error, fatal. Default: info
   "chef_cookbooks":[
     "vendor-cookbooks",
     "main-cookbooks"
@@ -186,7 +187,7 @@
       },
       "mysql":{
         "enabled":true,
-        "version":"5.3.6",
+        "version":"5.5",
         "password":"teracy"
       },
       "mongodb":{

@@ -126,6 +126,7 @@ desc "Installs Berkshelf cookbooks to vendor-cookbooks directory"
 task :berks_install do
   sh "bundle exec berks vendor vendor-cookbooks"
   sh "patch -p1 < patches/01_php_using_mysql_cookbook_6.patch"
+  sh "patch -p1 < patches/02_mysql_docker_compatible.patch"
 end
 
 

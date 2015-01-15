@@ -4,7 +4,7 @@ SMF
 ## Description
 
 Service Management Facility (SMF) is a tool in many Illumos and Solaris-derived operating systems
-that treats services as first class objects of the system. It provides an XML syntax for
+that treats services as first class objects of the system. It provides an XML syntax for 
 declaring how the system can interact with and control a service.
 
 The SMF cookbook contains providers for creating or modifying a service within the SMF framework.
@@ -89,9 +89,9 @@ Process management:
 * `duration` - Can be either `contract`, `wait`, `transient` or
   `child`, but defaults to `contract`. See the [Duration](#duration) section below.
 * `environment` - Hash - Environment variables to set while running commands
-* `ignore` - Array - Faults to ignore in subprocesses. For example,
-  if core dumps in children are handled by a master process and you
-  don't want SMF thinking the service is exploding, you can ignore
+* `ignore` - Array - Faults to ignore in subprocesses. For example, 
+  if core dumps in children are handled by a master process and you 
+  don't want SMF thinking the service is exploding, you can ignore 
   ["core", "signal"].
 * `privileges` — Array — An array of privileges to be allowed for started processes.
   Defaults to ['basic', 'net_privaddr']
@@ -115,10 +115,10 @@ Deprecated:
 ### :install (default)
 
 This will drop a manifest XML file into `#{service_path}/#{manifest_type}/#{name}.xml`. If there is already a service
-with a name that is matched by `new_resource.name` then the FMRI of our manifest will be set to the FMRI of the
+with a name that is matched by `new_resource.name` then the FMRI of our manifest will be set to the FMRI of the 
 pre-existing service. In this case, our properties will be merged into the properties of the pre-existing service.
 
-In this way, updates to recipes that use the SMF provider will not delete existing service properties, but will add
+In this way, updates to recipes that use the SMF provider will not delete existing service properties, but will add 
 or overwrite them.
 
 Because of this, the SMF provider can be used to update properties for
@@ -149,19 +149,19 @@ end
 
 ### `user`, `working_directory` and `environment`
 
-SMF does a remarkably good job running services as delegated users, and removes a lot of pain if you configure a
-service correctly. There are many examples online (blogs, etc) of users wrapping their services in shell scripts with
+SMF does a remarkably good job running services as delegated users, and removes a lot of pain if you configure a 
+service correctly. There are many examples online (blogs, etc) of users wrapping their services in shell scripts with 
 `start`, `stop`, `restart` arguments. In general it seems as if the intention of these scripts is to take care of the
 problem of setting environment variables and shelling out as another user.
 
-The use of init scripts to wrap executables can be unnecessary with SMF, as it provides hooks for all of these use cases.
+The use of init scripts to wrap executables can be unnecessary with SMF, as it provides hooks for all of these use cases. 
 When using `user`, SMF will assume that the `working_directory` is the user's home directory. This can be
-easily overwritten (to `/home/user/app/current` for a Rails application, for example). One thing to be careful of is
-that shell profile files will not be loaded. For this reason, if environment variables (such as PATH) are different
+easily overwritten (to `/home/user/app/current` for a Rails application, for example). One thing to be careful of is 
+that shell profile files will not be loaded. For this reason, if environment variables (such as PATH) are different 
 on your system or require additional entries arbitrary key/values may be set using the `environment` attribute.
 
-All things considered, one should think carefully about the need for an init script when working with SMF. For
-well-behaved applications with simple configuration, an init script is overkill. Applications with endless command-line
+All things considered, one should think carefully about the need for an init script when working with SMF. For 
+well-behaved applications with simple configuration, an init script is overkill. Applications with endless command-line 
 options or that need a real login shell (for instance ruby applications that use RVM) an init script may make life
 easier.
 
@@ -185,7 +185,7 @@ end
 
 This can be helpful if there are many services configured on a single
 host, as multiple services can be collapsed into the same
-authorizations. For instance: https://illumos.org/issues/4968
+authorizations. For instance: https://illumos.org/issues/4968 
 
 ### Dependencies
 
@@ -243,7 +243,7 @@ tested. Use this at your own risk, or improve the provider's compatibility with 
 
 ### Duration
 
-There are several different ways that SMF can track your service. By default it uses `contract`.
+There are several different ways that SMF can track your service. By default it uses `contract`. 
 Basically, this means that it will keep track of the PIDs of all daemonized processes generated from `start_command`.
 If SMF sees that processes are cycling, it may try to restart the service. If things get too hectic, it
 may think that your service is flailing and put it into maintenance mode. If this is normal for your service,
@@ -262,7 +262,7 @@ A fourth option is `child`.
 
 ### Ignore
 
-Sometimes you have a case where your service behaves poorly. The Ruby server Unicorn, for example, has a master
+Sometimes you have a case where your service behaves poorly. The Ruby server Unicorn, for example, has a master 
 process that likes to kill its children. This causes core dumps that SMF will interpret to be a failing service.
 Instead you can `ignore ["core", "signal"]` and SMF will stop caring about core dumps.
 
@@ -326,7 +326,7 @@ only work if they have access to variables set in an environment or computed in 
 
 ### Stability
 
-This is for reference more than anything, so that administrators of a service know what to expect of possible changes to
+This is for reference more than anything, so that administrators of a service know what to expect of possible changes to 
 the service definition.
 
 See: <http://www.cuddletech.com/blog/pivot/entry.php?id=182>
@@ -344,3 +344,5 @@ Changes to this cookbook may change the way that its internal checksums are gene
 If you `notify :restart` any service from within the `smf` block or include a `refresh_command`, please
 be aware that upgrading this cookbook may trigger a refresh or a registered notification on the first
 subsequent chef run.
+
+

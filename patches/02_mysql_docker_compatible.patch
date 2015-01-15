@@ -1,0 +1,13 @@
+diff --git a/vendor-cookbooks/mysql/libraries/provider_mysql_service.rb b/vendor-cookbooks/mysql/libraries/provider_mysql_service.rb
+index 76f4f9e..f7bc749 100644
+--- a/vendor-cookbooks/mysql/libraries/provider_mysql_service.rb
++++ b/vendor-cookbooks/mysql/libraries/provider_mysql_service.rb
+@@ -37,7 +37,7 @@ class Chef
+         create_stop_system_service
+ 
+         # Apparmor
+-        configure_apparmor if node['platform'] == 'ubuntu'
++        configure_apparmor if node['platform'] == 'ubuntu' and node['vm_provider'] != 'docker'
+ 
+         # System users
+         group "#{new_resource.name} :create mysql" do

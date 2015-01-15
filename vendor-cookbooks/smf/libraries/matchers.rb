@@ -7,3 +7,4 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:smf, :delete, name)
   end
 end
+
