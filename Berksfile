@@ -19,3 +19,4 @@ cookbook 'postgresql', '3.4.10'
 cookbook 'ssh_known_hosts', '1.3.2'
 cookbook 'pyenv', git: "https://github.com/sds/chef-pyenv"
 cookbook 'apache2', '2.0.0'
+cookbook 'phpmyadmin', '1.0.7', git: 'git@github.com:priestjim/chef-phpmyadmin.git'
