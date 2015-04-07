@@ -155,6 +155,9 @@ Vagrant.configure("2") do |config|
 
   # ssh configuration
   config.ssh.forward_agent = data_hash['vm_forward_agent']
+  config.ssh.username = data_hash['vm_ssh_user']
+  config.ssh.password = data_hash['vm_ssh_password']
+  config.ssh.insert_key = true
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.

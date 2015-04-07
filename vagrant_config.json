@@ -5,6 +5,8 @@
   //"vm_box_url":"https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.4.4.box",
   "vm_box_version": "",
   "vm_forward_agent":true,
+  "vm_ssh_user": "vagrant",
+  "vm_ssh_password": "vagrant",
   "vm_forwarded_ports":[
     {
       "guest":3000, //node apps, RoR
