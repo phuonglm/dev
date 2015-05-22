@@ -36,7 +36,7 @@ git_version = node['teracy-dev']['git']['version'].strip()
 
 current_git_version = ''
 begin
-    current_git_version = `git version`.split(' ')
+    current_git_version = Mixlib::ShellOut.new('git version').run_command.stdout.split(' ')
     current_git_version = current_git_version[current_git_version.length-1]
 rescue Exception => e
     current_git_version = ''
@@ -47,9 +47,24 @@ if !git_version.empty?
         node.override['git']['version'] = git_version
         node.override['git']['url'] = "https://www.kernel.org/pub/software/scm/git/git-#{git_version}.tar.gz"
         node.override['git']['checksum'] = node['teracy-dev']['git']['checksum']
+
+        execute 'Remove git bin' do
+            command <<-COMMAND
+                (sudo rm -rf $(which git))
+                (sudo apt-get remove git -f)
+                (sudo rm -rf #{node['git']['prefix']}/bin/git)
+            COMMAND
+        end
+
         include_recipe 'git::source'
     end
-
+else
+    execute 'Remove git bin' do
+        command <<-COMMAND
+            (sudo rm -rf #{node['git']['prefix']}/bin/git)
+        COMMAND
+    end
+    include_recipe 'git::default'
 end
 
 template '/home/vagrant/.gitconfig' do
@@ -82,7 +97,16 @@ pc () {
   chmod +s .git/config
 }')
                 file.write_file
-            else
+            end
+        end
+    end
+end
+
+ruby_block 'insert_line' do
+  block do
+        if not node['teracy-dev']['git']['core']['filemode']
+            fileName = '/home/vagrant/.bash_profile'
+            if not File.exist?(fileName)
                 file = File.open(fileName, 'w')
                 file.puts('
 PROMPT_COMMAND=pc

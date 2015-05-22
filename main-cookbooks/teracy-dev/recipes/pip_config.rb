@@ -47,3 +47,9 @@ template '/home/vagrant/.pip/pip.conf' do
     mode '0664'
     only_if { node['teracy-dev']['python']['enabled'] }
 end
+
+# Link the pip
+link '/usr/local/bin/pip' do
+  to '/usr/local/pyenv/shims/pip'
+  only_if { node['teracy-dev']['python']['enabled'] }
+end

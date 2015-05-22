@@ -25,14 +25,24 @@ default['teracy-dev']['git'] = {
 }
 
 
-
-
 default['teracy-dev']['python'] = {
     'enabled' => true,
     'pip' => {
         'global' => {
             #'index-url' => 'http://pypi.teracy.org/teracy/public/+simple/'
         }
+    }
+}
+
+
+default['teracy-dev']['java'] = {
+    'enabled' => false,
+    'version' => '7',
+    'flavor' => 'oracle', # one of 'openjdk', 'oracle' or 'ibm'. Default: 'oracle'
+    'maven' => {
+      'enabled' => false, # works only when java is enabled
+      'version' => '3.2.5', # we're supporting both 2.x.x and 3.x.x
+      'checksum' => '8c190264bdf591ff9f1268dc0ad940a2726f9e958e367716a09b8aaa7e74a755' # sha256
     }
 }
 
@@ -52,3 +62,20 @@ if node['teracy-dev']['ruby']['enabled']
     override['rbenv']['user']           = 'vagrant'
     override['rbenv']['group']          = 'vagrant'
 end
+
+if node['teracy-dev']['apache']['enabled']
+    override['apache']['dir'] = '/etc/apache2'
+end
+
+default['teracy-dev']['codebox'] = {
+    'enabled' => false,
+    'user' => 'vagrant',
+    'port' => 30000,
+    'sync_dir' => '/home/vagrant/workspace'
+}
+
+default['teracy-dev']['phpmyadmin'] = {
+    'enabled' => false,
+    'listen_port' => 9997,
+    'install_dir' => '/opt/phpmyadmin'
+}

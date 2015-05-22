@@ -6,7 +6,7 @@ description      'Installs/Configures teracy-dev'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.2.0'
 
-%w{ magic_shell nodejs npm rbenv ark python java maven php mongodb mysql postgresql git ssh_known_hosts }.each do |dep|
+%w{ magic_shell nodejs npm rbenv ark python java maven php mongodb mysql postgresql git ssh_known_hosts pyenv apache2 nginx phpmyadmin apt}.each do |dep|
     depends dep
 end
 
@@ -19,8 +19,11 @@ recipe 'teracy-dev::git', 'Configures and installs global git.'
 recipe 'teracy-dev::pip_config', 'Configures global pip.'
 recipe 'teracy-dev::rbenv', 'Installs rbenv and related packages.'
 recipe 'teracy-dev::node', 'Installs node and related packages.'
+recipe 'teracy-dev::apache2', 'Installs apache2 and related packages.'
 recipe 'teracy-dev::php', 'Installs php and related packages.'
 recipe 'teracy-dev::mongodb', 'Installs mongodb and related packages.'
 recipe 'teracy-dev::mysql', 'Installs mysql and related packages.'
 recipe 'teracy-dev::postgresql', 'Installs postgresql and related packages.'
-
+recipe 'teracy-dev::nginx', 'configure and install nginx'
+recipe 'teracy-dev::codebox', 'Installs codebox IDE.'
+recipe 'teracy-dev::phpmyadmin', 'Install phpmyadmin and configure with apache, nginx'
