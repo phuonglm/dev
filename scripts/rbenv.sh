@@ -7,7 +7,7 @@
 # $ cd /tmp && wget https://raw.github.com/teracy-official/dev/master/scripts/rbenv.sh && chmod +x rbenv.sh && . ./rbenv.sh && cd ~
 # TODO(phuonglm): improve this: non-root user? this was validated on dev VM only, what's about clean Ubuntu instance?
 function install_support_packages() {
-    sudo apt-get install build-essential git
+    sudo apt-get --yes install build-essential git
 }
 
 function install_rbenv() {
