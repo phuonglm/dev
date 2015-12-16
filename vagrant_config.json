@@ -104,7 +104,8 @@
     //"name":"teracy-dev",
     "memory":2024,
     //"cpus":1,
-    "description":"teracy-dev vagrant box"
+    "description":"teracy-dev vagrant box",
+    "nataliasmode1": "proxyonly"
   },
   "chef_log_level":"info", //one of debug, info, warn, error, fatal. Default: info
   "chef_cookbooks":[

@@ -130,10 +130,19 @@ if node['teracy-dev']['php']['enabled']
         service stop php5-fpm
         killall php5-fpm
         killall php-fpm
-        /etc/init.d/php5-fpm start || true
+        /etc/init.d/php5-fpm start || service php5-fpm restart ||true
       EOF
     end
   end
+
+  bash 'install xdebug' do
+    code <<-EOF
+      pecl install -f xdebug
+    EOF
+    not_if 'pecl list | grep -q "xdebug"'
+    user 'root'
+  end
+
   %w(cli fpm).each do |conf_type|
     bash "update php timezone for php #{conf_type}" do
       code <<-EOF
@@ -150,6 +159,16 @@ if node['teracy-dev']['php']['enabled']
       user 'root'
       only_if {File.exist?("/etc/php5/#{conf_type}/php.ini")}
     end
+
+    bash 'enable xdebug for php #{conf_type}' do
+      code <<-EOF
+        echo 'zend_extension="xdebug.so"' >> /etc/php5/#{conf_type}/php.ini
+        echo 'xdebug.remote_connect_back=true' >> /etc/php5/#{conf_type}/php.ini
+        echo 'xdebug.remote_enable=true' >> /etc/php5/#{conf_type}/php.ini
+      EOF
+      not_if 'grep -q "xdebug.so" /etc/php5/{conf_type}/php.ini'
+      user 'root'
+    end
   end
 
   include_recipe 'composer'
@@ -159,7 +178,8 @@ if node['teracy-dev']['php']['enabled']
         echo 'export PATH=~/.composer/vendor/bin/:$PATH' | tee --append ~/.bash_profile
       EOF
       environment 'HOME'=>'/home/vagrant/'
-      only_if 'grep -q ".composer" /home/vagrant/.bash_profile'
+      not_if 'grep -q ".composer" /home/vagrant/.bash_profile'
       user 'vagrant'
   end
+
 end
