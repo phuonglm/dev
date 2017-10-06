@@ -3,6 +3,36 @@ require "./lib/utility"
 
 describe "utility" do
   describe "overrides" do
+
+    context "given an nil obj1" do
+      it "returns the same obj2" do
+
+        obj2 = {
+          "msg" => "hello"
+        }
+        new_obj = overrides(nil, obj2)
+        expect(new_obj).to eql(obj2)
+      end
+    end
+
+    context "given an nil obj2" do
+      it "returns the same obj1" do
+
+        obj1 = {
+          "msg" => "hello"
+        }
+        new_obj = overrides(obj1, nil)
+        expect(new_obj).to eql(obj1)
+      end
+    end
+
+    context "given an nil obj1, obj2" do
+      it "returns the empty object" do
+        new_obj = overrides(nil, nil)
+        expect(new_obj).to eql({})
+      end
+    end
+
     context "given an empty obj2" do
       it "returns the same obj1" do
         obj1 = {

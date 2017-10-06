@@ -1,8 +1,10 @@
 # Utility functions
 def overrides(obj1, obj2)
+  obj1 = obj1 != nil ? obj1 : {}
+  obj2 = obj2 != nil ? obj2 : {}
+
   obj2.each do |key, value|
     replaced_key = key.to_s.sub(/_u?[ra]_/, '')
-
     if !obj1.has_key?(replaced_key)
      if value.class.name == 'Hash'
         obj1[key] = {}

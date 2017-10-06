@@ -18,7 +18,6 @@ begin
     parsing_file = File.dirname(__FILE__) + '/vagrant_config_override.json'
     override_file = File.read(parsing_file)
     base_override_hash = JSON.parse(override_file)
-
   end
 
   if File.exist?(File.dirname(__FILE__) + '/workspace/dev-setup/vagrant_config_default.json')
